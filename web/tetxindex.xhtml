@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../plantilla/plantilla.xhtml">
+
+            <ui:define name="content">
+                content
+            </ui:define>
+
+        </ui:composition>
+        <h:form>
+            <!-- Muestra la constante de cadena ENUM en EL --> 
+            <h:outputText value="#{beanPosicion.posicionOptions[0].string}"></h:outputText><br/><br/>
+            <!-- Evalúa la constante ENUM en EL -->
+            <h:outputText value="#{beanPosicion.posicionOptions[0].string=='PORTERO'}"></h:outputText><br/>
+            <!--  Constantes ENUM en un cuadro de combox en EL-->
+            <h:selectOneMenu value="#{beanPosicion.posicion}" >
+                <f:selectItems value="#{beanPosicion.posicionOptions}" />
+            </h:selectOneMenu>
+        </h:form>
+    </body>
+</html>
