@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition    xmlns="http://www.w3.org/1999/xhtml"
+                   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                   template="../plantillas/plantilla.xhtml"
+                   xmlns:p="http://primefaces.org/ui"
+                   xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <h1 align="center"  style="color: menutext">LISTA DE LESIONES JUGADORES</h1>
+        <p:dataTable var="lesionesJugadores" value="#{listaBeanLesionJugador.lesionJugadores}">
+
+            <p:column headerText="Fecha">
+                <h:outputText value="#{lesionesJugadores.fecha}" />
+            </p:column>
+
+
+            <p:column headerText="Jugador ID">
+                <h:outputText value="#{lesionesJugadores.jugador.id}" />
+            </p:column>
+            <p:column headerText="Lesion ID">
+                <h:outputText value="#{lesionesJugadores.lesion.id}" />
+            </p:column>
+
+
+        </p:dataTable>
+        <p:commandButton value="Salir" action="#{lesionesJugadores.salir()}" id="btnSalir" 
+                         style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
+
+    </ui:define>
+
+</ui:composition>

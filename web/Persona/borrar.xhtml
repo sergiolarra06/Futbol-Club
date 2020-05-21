@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition    xmlns="http://www.w3.org/1999/xhtml"
+                   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                   template="../plantillas/plantilla.xhtml"
+                   xmlns:p="http://primefaces.org/ui"
+                   xmlns:h="http://xmlns.jcp.org/jsf/html"
+                   xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>    
+
+            <p:growl id="growl" showDetail="true" sticky="true"/>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+
+            <h3>Id</h3>
+            <p:inputText value="#{beanPersona.id}"/>
+
+            <p:commandButton value="Eliminar" action="#{beanPersona.eliminar()}" update="messages,growl"/>   
+            <p:commandButton value="Regresar a lista" action="#{beanPersona.regresar()}" id="iconOnly" 
+                             style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

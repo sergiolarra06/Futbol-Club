@@ -1,6 +1,7 @@
 package com.controller.bean;
 
 import com.primefaces.dao.PersonaDAO;
+import com.primefaces.dto.ContactoEmergencia;
 import com.primefaces.dto.Persona;
 import java.io.Serializable;
 //import java.sql.Date;
@@ -12,6 +13,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.RowEditEvent;
 //import javax.validation.constraints.Email;
 
 /**
@@ -32,7 +34,7 @@ public class BeanPersona implements Serializable {
     private String apellido;
     private Date fechaNacimiento;
 //    @Email(message = "must be a valid email")
-    private String correo;
+    private String correo = "example@gmail.com";
 
     public BeanPersona() {
 
@@ -55,6 +57,49 @@ public class BeanPersona implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Se registro la persona"));
 
         System.out.println("rta " + rta);
+    }
+
+    public void modificar() {
+
+        Persona persona = new Persona();
+        persona.setNombre(nombre);
+        persona.setApellido(apellido);
+        persona.setFechaNacimiento(new java.sql.Date(fechaNacimiento.getTime()));
+        persona.setCorreo(correo);
+        persona.setId(id);
+
+        PersonaDAO personaDAO = new PersonaDAO();
+        int rta = personaDAO.modificar(persona);
+
+        if (rta > 0) {
+            //this.mensaje = "actualizo "+r;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Actualizo " + rta + " Vehiculo"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "NO, Actualizo"));
+
+        }
+        System.out.println("rta " + rta);
+
+    }
+
+    public void eliminar() {
+
+        Persona persona = new Persona();
+        persona.setId(id);
+//        persona.setNombre(nombre);
+//        persona.setApellido(apellido);
+//        persona.setFechaNacimiento(new java.sql.Date(fechaNacimiento.getTime()));
+//        persona.setCorreo(correo);
+
+        PersonaDAO personaDAO = new PersonaDAO();
+        int rta = personaDAO.modificar(persona);
+        if (rta > 0) {
+            //this.mensaje = "eliminar "+r;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Eliminado " + rta + " Persona"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "No, Elimino"));
+
+        }
     }
 
     public long getId() {
@@ -97,10 +142,7 @@ public class BeanPersona implements Serializable {
         this.correo = correo;
     }
 
-//    public java.sql.Date convertir(java.util.Date fechaUtilDate) {
-//        return new java.sql.Date(fechaUtilDate.getTime());
-//    }
-    public String salir() {
+    public String regresar() {
         return "index";
     }
 

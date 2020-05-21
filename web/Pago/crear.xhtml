@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                 template="../plantillas/plantilla.xhtml"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <a href="../../plantillas/plantilla.xhtml"></a>
+        <h1 align="center"  style="color: menutext">REGISTAR PAGO</h1>
+        <h:form >    
+            <p:growl id="growl" showDetail="true" sticky="true"/>
+
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+
+            <h3>Id</h3>
+            <p:inputText value="#{beanPago.id}"/>
+            <br/>
+
+            <h3>Jugador ID</h3>
+            <p:inputText value="#{beanPago.jugador.id}"/>
+            <br/>
+
+            <h4> <p:outputLabel for="button" value="Fecha de pago" /> </h4>
+            <p:calendar id="button" value="#{beanPago.fecha}" showOn="button" />
+
+            <h3>  <p:outputLabel for="@next" value="Periodo de pago"  /></h3>
+            <p:selectOneMenu id="meses" value="#{beanPago.periodoPago}" effect="fold" editable="true">
+                <f:selectItem itemLabel="Seleccione un mes" itemValue="" />
+                <f:selectItems value="#{beanPago.periodoPagos}" />
+            </p:selectOneMenu>
+
+            <h3>Valor</h3>
+            <p:inputText value="#{beanPago.valor}"/>
+            <br/>
+
+
+            <br/>
+            <p:commandButton value="Guardar" action="#{beanPago.insertar()}" update="messages,growl"/>   
+            <br />
+            <p:commandButton value="Salir" action="#{beanPago.salir()}" id="iconOnly" 
+                             style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
+        </h:form>
+    </ui:define>
+
+</ui:composition>

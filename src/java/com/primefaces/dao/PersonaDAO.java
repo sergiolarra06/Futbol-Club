@@ -26,12 +26,65 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
             + "	id, nombre, apellido, fecha_nacimiento, correo)\n"
             + "	VALUES (?, ?, ?, ?, ?)";
 
+    private static final String INSERTJ = "INSERT INTO public.jugador(id, contacto_emergencia_id,  posicion) \n"
+            + "VALUES (?, ?, ?)";
+
     private static final String UPDATE = "UPDATE public.persona\n"
-            + "	SET  nombre=?, apellido=?, fecha_nacimiento=?, correo=?\n"
+            + "	SET nombre=?, apellido=?, fecha_nacimiento=?, correo=?\n"
             + "	WHERE id = ?";
 
     private static final String DELETE = "DELETE FROM public.persona\n"
             + "	WHERE id = ?";
+
+    @Override
+    public int eliminar(Persona persona) {
+        Connection conn = new Conexion().getConnection();
+        int filas = 0;
+
+        if (conn != null) {
+            PreparedStatement stmt;
+
+            try {
+                stmt = conn.prepareStatement(DELETE);
+                stmt.setLong(1, persona.getId());
+                return filas = stmt.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al insertar persona", ex);
+            } finally {
+
+            }
+        }
+        return filas;
+    }
+
+    @Override
+    public int modificar(Persona persona) {
+        Connection conn = new Conexion().getConnection();
+        int filas = 0;
+        if (conn != null) {
+            PreparedStatement stmt;
+
+            try {
+                stmt = conn.prepareStatement(UPDATE);
+
+                stmt.setString(1, persona.getNombre());
+                stmt.setString(2, persona.getApellido());
+                stmt.setDate(3, (java.sql.Date) persona.getFechaNacimiento());
+                stmt.setString(4, persona.getCorreo());
+
+                stmt.setLong(5, persona.getId());
+
+                return filas = stmt.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al insertar persona", ex);
+            } finally {
+
+            }
+        }
+        return filas;
+    }
 
     @Override
     public int insertar(Persona persona) {
@@ -57,16 +110,6 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
     }
 
     @Override
-    public void modificar(Persona o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void eliminar(Persona o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Persona obtener(Long id) {
         List<Persona> dato = new ArrayList<>();
         Conexion conexion = new Conexion();
@@ -83,6 +126,9 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
                     Persona persona = new Persona();
                     persona.setId(resultSet.getInt(1));
                     persona.setNombre(resultSet.getString(2));
+                    persona.setApellido(resultSet.getString(3));
+                    persona.setFechaNacimiento(resultSet.getDate(4));
+                    persona.setCorreo(resultSet.getString(5));
 
                     dato.add(persona);
 
@@ -134,37 +180,6 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
         }
         return personas;
 
-    }
-
-    public List<Persona> test() {
-        Conexion conexion = new Conexion();// Connection conn = Conexion.getConnection();
-        Connection conn = conexion.getConnection();
-        List<Persona> personas = new ArrayList<>();
-
-        if (conexion != null) {
-            PreparedStatement stmt;
-            try {
-                stmt = conn.prepareStatement(SQL_SELECT);
-                ResultSet resultSet = stmt.executeQuery();
-                while (resultSet.next()) {
-
-                    Long id = resultSet.getLong("id");
-                    String nombre = resultSet.getString("nombre");
-                    String apellido = resultSet.getString("apellido");
-                    Date fechaNacimiento = resultSet.getDate("fecha_nacimiento");
-                    String correo = resultSet.getString("correo");
-
-                    Persona persona = new Persona(id, nombre, apellido, (java.sql.Date) fechaNacimiento, correo);
-                    personas.add(persona);
-
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ListaBeanPersonas.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                conexion.close(conn);
-            }
-        }
-        return personas;
     }
 
 }

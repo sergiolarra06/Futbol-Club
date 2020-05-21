@@ -1,7 +1,7 @@
 package com.primefaces.dao;
 
-import com.controller.bean.ListaBeanPersonas;
-import com.primefaces.dto.ContactoEmergencia;
+import com.controller.bean.ListaBeanEstatura;
+import com.primefaces.dto.Estatura;
 import com.primefaces.dto.*;
 import java.sql.*;
 import java.sql.PreparedStatement;
@@ -14,21 +14,21 @@ import java.util.logging.Logger;
  *
  * @author jean.cortes
  */
-public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, Long> {
+public class EstaturaDAO implements IOperaciones<Estatura, Long> {
 
     private static final String SQL_SELECT_INNER_JOIN = "SELECT persona.id, persona.nombre, persona.apellido,\n"
             + "	   contacto_emergencia.telefono\n"
             + "FROM persona INNER JOIN contacto_emergencia ON persona.id = contacto_emergencia.id";
 
-    private static final String SQL_SELECT = "SELECT id, telefono\n"
-            + "	FROM public.contacto_emergencia";
+    private static final String SQL_SELECT = "SELECT jugador_id, fecha, estatura\n"
+            + "	FROM public.estatura";
 
     private static final String SQL_SELECT_BY_ID = "SELECT  id, telefono\n"
             + "	FROM public.contacto_emergencia WHERE id = ?";
 
-    private static final String INSERT = "INSERT INTO public.contacto_emergencia(\n"
-            + "	id, telefono)\n"
-            + "	VALUES (?, ?)";
+    private static final String INSERT = "INSERT INTO public.estatura(\n" +
+"	jugador_id, fecha, estatura)\n" +
+"	VALUES (?, ?, ?)";
 
     private static final String UPDATE = "UPDATE public.contacto_emergencia\n"
             + "	SET id=?, telefono=?\n"
@@ -37,17 +37,18 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
     private static final String DELETE = "";
 
     @Override
-    public int insertar(ContactoEmergencia contactoEmergencia) {
+    public int insertar(Estatura estatura) {
         Connection conn = new Conexion().getConnection();
         if (conn != null) {
             PreparedStatement stmt;
             try {
                 stmt = conn.prepareStatement(INSERT);
-                stmt.setLong(1, contactoEmergencia.getId());
-                stmt.setString(2, contactoEmergencia.getTelefono());
+                stmt.setLong(1, estatura.getJugador().getId());
+                stmt.setDate(2, (java.sql.Date) estatura.getFecha());
+                stmt.setDouble(3, estatura.getEstatura());
                 return stmt.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, "Error al insertar contacto de emergencia", ex);
+                Logger.getLogger(EstaturaDAO.class.getName()).log(Level.SEVERE, "Error al insertar estatura", ex);
             } finally {
 
             }
@@ -56,17 +57,18 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
     }
 
     @Override
-    public int modificar(ContactoEmergencia contactoEmergencia) {
+    public int modificar(Estatura estatura) {
         Connection conn = new Conexion().getConnection();
         if (conn != null) {
             PreparedStatement stmt;
             try {
                 stmt = conn.prepareStatement(UPDATE);
-                stmt.setLong(1, contactoEmergencia.getId());
-                stmt.setString(2, contactoEmergencia.getTelefono());
+                stmt.setLong(1, estatura.getJugador().getId());
+                stmt.setDate(2, estatura.getFecha());
+                stmt.setDouble(3, estatura.getEstatura());
                 return stmt.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, "Error al insertar contacto de emergencia", ex);
+                Logger.getLogger(EstaturaDAO.class.getName()).log(Level.SEVERE, "Error al insertar contacto de emergencia", ex);
             } finally {
 
             }
@@ -75,13 +77,13 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
     }
 
     @Override
-    public int eliminar(ContactoEmergencia o) {
+    public int eliminar(Estatura estatura) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ContactoEmergencia obtener(Long id) {
-        List<ContactoEmergencia> dato = new ArrayList<>();
+    public Estatura obtener(Long id) {
+        List<Estatura> dato = new ArrayList<>();
         Conexion conexion = new Conexion();
         Connection conn = conexion.getConnection();
 
@@ -90,20 +92,21 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
             try {
                 stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
                 stmt.setLong(1, id);
-                ResultSet resultSet = stmt.executeQuery();
-                if (resultSet.next()) {
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
 
-                    ContactoEmergencia contactoEmergencia = new ContactoEmergencia();
-                    contactoEmergencia.setId(resultSet.getInt(1));
-                    contactoEmergencia.setNombre(resultSet.getString(2));
+                    Estatura estatura = new Estatura();
+                    estatura.setJugador((Jugador) rs.getObject(1));
+                    estatura.setFecha(rs.getDate(2));
+                    estatura.setEstatura(rs.getDouble(3));
 
-                    dato.add(contactoEmergencia);
+                    dato.add(estatura);
 
-                    return contactoEmergencia;
+                    return estatura;
 
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EstaturaDAO.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 conexion.close(conn);
             }
@@ -112,37 +115,37 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
     }
 
     @Override
-    public List<ContactoEmergencia> obtenerTodos() {
+    public List<Estatura> obtenerTodos() {
         Conexion conexion = new Conexion();
         Connection conn = conexion.getConnection();//Realiza la conexion
-        List<ContactoEmergencia> contactoEmergencias = new ArrayList<>();
+        List<Estatura> estaturas = new ArrayList<>();
 
         if (conexion != null) {
             PreparedStatement stmt;
             try {
-                stmt = conn.prepareStatement(SQL_SELECT_INNER_JOIN);
+                stmt = conn.prepareStatement(SQL_SELECT);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {//Iteramos cada uno de los elementos que tengamos en el rs
                     //Recuperamos los campos de nuestra entidad
-                    Long id = rs.getLong("id");
-                    String nombre = rs.getString("nombre");
-                    String apellido = rs.getString("apellido");
-                    String telefono = rs.getString("telefono");
+                    JugadorDAO jugadorDAO = new JugadorDAO();
+                    Jugador jugador = jugadorDAO.obtener(Long.parseLong(rs.getString("jugador_id")));
+                    Date fecha = rs.getDate("fecha");
+                    Double estatura = rs.getDouble("estatura");
                     //Creamos obj de la entidad correspondiente 
-                    ContactoEmergencia contactoEmergencia = new ContactoEmergencia(id, nombre, apellido, telefono);
+                    Estatura estatura1 = new Estatura(jugador, fecha, estatura);
                     //agregamos nuestro objeto de tipo contacto de emergencia a la lista de contacto de emergencias
-                    contactoEmergencias.add(contactoEmergencia);
+                    estaturas.add(estatura1);
 
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(ContactoEmergenciaDAO.class
+                Logger.getLogger(EstaturaDAO.class
                         .getName()).log(Level.SEVERE, null, ex);
             } finally {
                 conexion.close(conn);
             }
         }
-        return contactoEmergencias;
+        return estaturas;
 
     }
 

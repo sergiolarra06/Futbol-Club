@@ -9,10 +9,11 @@ import java.util.List;
 public interface IOperaciones<T, K> {//Tipo de T=dato,K=identificador 
 
     int insertar(T obj);
+     
 
-    void modificar(T obj);
+    int modificar(T obj);
 
-    void eliminar(T obj);
+    int eliminar(T obj);
 
     List<T> obtenerTodos();
 

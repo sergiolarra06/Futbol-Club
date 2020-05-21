@@ -36,7 +36,7 @@ import javax.persistence.Persistence;
 @ViewScoped
 @SessionScoped
 
-public class BeanJugador implements Serializable {
+public class BeanLesionJugador implements Serializable {
 
     /**
      * Creates a new instance of BeanVehiculo
@@ -54,7 +54,7 @@ public class BeanJugador implements Serializable {
     private /*Posicion */ String posicion;
     private Map<String, String> posiciones = new HashMap<String, String>();
 
-    public BeanJugador() {
+    public BeanLesionJugador() {
         contactosEmergencia = new ContactoEmergencia();
 //        beanContactoEmergencia = new ListaBeanContactoEmergencia();
 
