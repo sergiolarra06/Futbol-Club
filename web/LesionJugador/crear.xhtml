@@ -14,19 +14,23 @@
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate/>
             </p:messages>
+          
+            <h4> <p:outputLabel for="button" value="Fecha de lesion" /> </h4>
+            <p:calendar id="button" value="#{beanLesionJugador.fecha}" showOn="button" />
 
-            <h3> Id</h3>
-            <p:inputText value="#{be.id}"/>
+
+            <h3>Jugador ID</h3>
+            <p:inputText value="#{beanLesionJugador.jugador.id}"/>
             <br/>
 
-            <h3>Descripcion</h3>
-            <p:inputText value="#{beanLesion.descripcion}"/>
+            <h3>Lesion ID</h3>
+            <p:inputText value="#{beanLesionJugador.lesion.id}"/>
             <br/>
 
 
-            <p:commandButton value="Guardar" action="#{beanLesion.insertar()}" update="messages,growl"/>   
+            <p:commandButton value="Guardar" action="#{beanLesionJugador.insertar()}" update="messages,growl"/>   
             <br />
-            <p:commandButton value="Salir" action="#{beanLesion.salir()}" id="iconOnly" 
+            <p:commandButton value="Salir" action="#{beanLesionJugador.salir()}" id="iconOnly" 
                              style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
         </h:form>
     </ui:define>

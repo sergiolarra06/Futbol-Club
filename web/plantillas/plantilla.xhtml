@@ -6,30 +6,72 @@
       xmlns:f="http://java.sun.com/jsf/core" >
 
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <!--
-                <h:outputStylesheet name="./css/default.css"/>
-                <h:outputStylesheet name="./css/cssLayout.css"/>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+         
+                  <h:outputStylesheet name="./css/default.css"/>
+                  <h:outputStylesheet name="./css/cssLayout.css"/>
+          
+          <link href="../resources/css/default.css" rel="stylesheet" type="text/css"/>
+          <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
         -->
-        <link href="../resources/css/default.css" rel="stylesheet" type="text/css"/>
-        <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+        <!-- Required meta tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-        <title>Propietario</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+        <script src="https://kit.fontawesome.com/184126854a.js" crossorigin="anonymous"></script>
+
+        <title>Futbol Team</title>
     </h:head>
 
     <h:body>
 
         <div id="top">
-            <ui:insert name="top">FUTBOL CLUB</ui:insert>
+
+            <ui:insert name="top">
+                <header id="main-header" class="py-2 bg-info text-white">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h1>
+                                    <i class="fas fa-cog"></i> Control de Futbol Club
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </ui:insert> 
         </div>
 
         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+
+            <ui:insert name="content">
+                Content
+
+            </ui:insert>
+
+           
         </div>
 
         <div id="bottom">
-            <ui:insert name="bottom">Universidad Central</ui:insert>
+
+            <ui:insert name="bottom">
+                <footer id="pie-pagina" class="bg-warning text-white mt-5 p-5">
+                    <div class="container">
+                        <div class="col">
+                            <p class="lead text-center">
+                                Copyright &copy; Jean Albert Cortes Ortiz and  Sergio Larrañaga
+                                Universidad Central
+                                <i class="fas fa-futbol"></i>
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+
+            </ui:insert>
         </div>
+
 
     </h:body>
 

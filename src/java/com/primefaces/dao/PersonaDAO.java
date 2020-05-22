@@ -33,7 +33,7 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
             + "	SET nombre=?, apellido=?, fecha_nacimiento=?, correo=?\n"
             + "	WHERE id = ?";
 
-    private static final String DELETE = "DELETE FROM public.persona\n"
+    private static final String DELETE = "DELETE FROM persona\n"
             + "	WHERE id = ?";
 
     @Override
@@ -72,7 +72,6 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
                 stmt.setString(2, persona.getApellido());
                 stmt.setDate(3, (java.sql.Date) persona.getFechaNacimiento());
                 stmt.setString(4, persona.getCorreo());
-
                 stmt.setLong(5, persona.getId());
 
                 return filas = stmt.executeUpdate();

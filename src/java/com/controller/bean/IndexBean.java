@@ -12,14 +12,14 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class IndexBean implements Serializable {
 
-    public String irCrearPersona() {
-      System.out.println("Ingreso a Persona ..");
+    public String irCrearVehiculo() {
+//      System.out.println("Ingreso a Vehiculo ..");
         return "Persona";
     }
 
-    public String irListaPersona() {
-        System.out.println("Ingreso a Lista Personas ..");
-        return "listarPersonas";
+    public String irListaVehiculo() {
+        System.out.println("Ingreso a Lista Vehiculo ..");
+        return "listavehiculos";
     }
 
     public String irCrearPropietario() {
@@ -40,6 +40,16 @@ public class IndexBean implements Serializable {
     public String irListaEnsambladora() {
         System.out.println("Ingreso a Lista Ensambladora ..");
         return "listaensambladoras";
+    }
+
+    public String irCrearPersona() {
+//      System.out.println("Ingreso a Persona..");
+        return "crear";
+    }
+
+    public String irListaPersona() {
+//        System.out.println("Ingreso a Lista Persona ..");
+        return "index";
     }
 
 }

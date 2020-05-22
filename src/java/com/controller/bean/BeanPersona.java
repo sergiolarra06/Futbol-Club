@@ -9,9 +9,7 @@ import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 //import javax.validation.constraints.Email;
@@ -20,8 +18,8 @@ import org.primefaces.event.RowEditEvent;
  *
  * @author Jean Cortes
  */
-//@Named(value = "beanv")
-//@Dependent
+@Named
+@RequestScoped
 @ManagedBean
 @ViewScoped
 public class BeanPersona implements Serializable {
@@ -92,7 +90,7 @@ public class BeanPersona implements Serializable {
 //        persona.setCorreo(correo);
 
         PersonaDAO personaDAO = new PersonaDAO();
-        int rta = personaDAO.modificar(persona);
+        int rta = personaDAO.eliminar(persona);
         if (rta > 0) {
             //this.mensaje = "eliminar "+r;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Eliminado " + rta + " Persona"));
