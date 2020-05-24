@@ -31,10 +31,11 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
             + "	VALUES (?, ?)";
 
     private static final String UPDATE = "UPDATE public.contacto_emergencia\n"
-            + "	SET id=?, telefono=?\n"
-            + "	WHERE id = ?";
+            + "	SET  telefono=?\n"
+            + "	WHERE id=?";
 
-    private static final String DELETE = "";
+    private static final String DELETE = "DELETE FROM public.contacto_emergencia\n"
+            + "	WHERE id=?";
 
     @Override
     public int insertar(ContactoEmergencia contactoEmergencia) {
@@ -58,25 +59,42 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
     @Override
     public int modificar(ContactoEmergencia contactoEmergencia) {
         Connection conn = new Conexion().getConnection();
+        int filas = 0;
         if (conn != null) {
             PreparedStatement stmt;
             try {
                 stmt = conn.prepareStatement(UPDATE);
-                stmt.setLong(1, contactoEmergencia.getId());
-                stmt.setString(2, contactoEmergencia.getTelefono());
-                return stmt.executeUpdate();
+                stmt.setString(1, contactoEmergencia.getTelefono());
+                stmt.setLong(2, contactoEmergencia.getId());
+                return filas = stmt.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, "Error al insertar contacto de emergencia", ex);
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al modificar contactoEmergencia", ex);
             } finally {
 
             }
         }
-        return 0;
+        return filas;
+
     }
 
     @Override
-    public int eliminar(ContactoEmergencia o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int eliminar(ContactoEmergencia contactoEmergencia) {
+        Connection conn = new Conexion().getConnection();
+        int filas = 0;
+        if (conn != null) {
+            PreparedStatement stmt;
+            try {
+                stmt = conn.prepareStatement(DELETE);
+                stmt.setLong(1, contactoEmergencia.getId());
+                return filas = stmt.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al eliminar contactoEmergencia", ex);
+            } finally {
+
+            }
+        }
+        return filas;
     }
 
     @Override
@@ -103,7 +121,7 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
 
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, "Error al obtener por id", ex);
             } finally {
                 conexion.close(conn);
             }
@@ -137,7 +155,7 @@ public class ContactoEmergenciaDAO implements IOperaciones<ContactoEmergencia, L
 
             } catch (SQLException ex) {
                 Logger.getLogger(ContactoEmergenciaDAO.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                        .getName()).log(Level.SEVERE, "Error al listar todos los contactoEmergencias", ex);
             } finally {
                 conexion.close(conn);
             }

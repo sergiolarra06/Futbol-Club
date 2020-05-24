@@ -8,31 +8,25 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <h1 align="center"  style="color: menutext">REGISTAR CONTACTO DE EMERGENCIA</h1>
-
-        <h:form>    
+        <h1 align="center"  style="color: menutext">EDITAR CONTACTOS DE EMERGENCIA</h1>
+        <h:form >    
             <p:growl id="growl" showDetail="true" sticky="true"/>
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate/>
             </p:messages>
 
-            <h3>  <p:outputLabel for="@next" value="ID:" /> </h3>
-            <p:selectOneMenu id="contacto" value="#{beanContactoEmergencia.id}" style="width:125px" >
+            <h3> <p:outputLabel for="@next" value="Nombres contactos emergencia " /> </h3>  
+            <p:selectOneMenu id="trl" value="#{beanContactoEmergencia.id}" style="width:125px" >
                 <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItems value="#{listaBeanPersonas.personas}" var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
-                <f:facet name="footer">
-                    <p:separator />
-                    <h:outputText style="font-weight:bold;"/>
-                </f:facet>
+                <f:selectItems value="#{listaBeanContactoEmergencia.contactosEmergencia}" var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
             </p:selectOneMenu>
 
             <h3> <i class="fa fa-fw fa-phone-square" >Telefono</i></h3>  
             <p:inputText  value="#{beanContactoEmergencia.telefono}"/>
 
 
-
             <br/>
-            <p:commandButton value="Guardar" icon="fa fa-fw fa-save"  action="#{beanContactoEmergencia.insertar()}" update="messages,growl"/>   
+            <p:commandButton  value="Guardar" icon="fa fa-fw fa-save" action="#{beanContactoEmergencia.modificar()}" update="messages,growl"/>   
             <br />
             <p:commandButton value="Regresar a la lista"  icon="fa fa-fw fa-arrow-circle-o-left"  action="#{beanContactoEmergencia.regresar()}" id="iconOnly" 
                              style="margin-right:px;"/>

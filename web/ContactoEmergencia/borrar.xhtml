@@ -8,23 +8,22 @@
                    xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <h1 align="center"  style="color: menutext">ELIMINAR PERSONAS</h1>
+        <h1 align="center"  style="color: menutext">ELIMINAR CONTACTOS DE EMERGENCIA</h1>
         <h:form>    
-
             <p:growl id="growl" showDetail="true" sticky="true"/>
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate/>
             </p:messages>
 
-            <h3> <p:outputLabel for="@next" value="Nombre persona"  /></h3>
-            <p:selectOneMenu id="posiciones" value="#{beanPersona.id}" effect="fold" editable="true">
+            <h3> <p:outputLabel for="@next" value="Nombre contactos de mergencia"/></h3>
+            <p:selectOneMenu id="contacto" value="#{beanContactoEmergencia.id}" effect="fold" editable="true">
                 <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItems value="#{listaBeanPersonas.personas}" var="p" itemValue="#{p.id}" itemLabel="#{p.nombre}" />
+                <f:selectItems value="#{listaBeanContactoEmergencia.contactosEmergencia}" var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
             </p:selectOneMenu>
 
 
-            <p:commandButton   value="Eliminar"   icon="fa fa-fw fa-remove" action="#{beanPersona.eliminar()}" update="messages,growl"/>   
-            <p:commandButton value="Regresar a la lista"  icon="fa fa-fw fa-arrow-circle-o-left"  action="#{beanPersona.regresar()}" id="iconOnly" 
+            <p:commandButton   value="Eliminar"   icon="fa fa-fw fa-remove" action="#{beanContactoEmergencia.eliminar()}" update="messages,growl"/>   
+            <p:commandButton value="Regresar a la lista"  icon="fa fa-fw fa-arrow-circle-o-left"  action="#{beanContactoEmergencia.regresar()}" id="iconOnly" 
                              style="margin-right:px;" />
 
         </h:form>

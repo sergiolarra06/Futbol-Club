@@ -21,13 +21,15 @@
 
             <h3>Descripcion</h3>
             <p:inputText value="#{beanLesion.descripcion}"/>
+           
+
+
+            <br/><br/>
+            <p:commandButton value="Guardar" icon="fa fa-fw fa-save"  action="#{beanLesion.insertar()}" update="messages,growl"/>   
             <br/>
+            <p:commandButton value="Regresar a la lista"  icon="fa fa-fw fa-arrow-circle-o-left"  action="#{beanLesion.regresar()}" id="iconOnly" 
+                             style="margin-right:px;" title="Ir ->" />
 
-
-            <p:commandButton value="Guardar" action="#{beanLesion.insertar()}" update="messages,growl"/>   
-            <br />
-            <p:commandButton value="Salir" action="#{beanLesion.salir()}" id="iconOnly" 
-                             style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
         </h:form>
     </ui:define>
 

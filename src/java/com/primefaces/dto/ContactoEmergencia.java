@@ -33,7 +33,7 @@ public class ContactoEmergencia extends Persona {
 
     @Override
     public String toString() {
-        return " => contactoEmergencia{" + "id=" + super.getId() + ", nombre=" + getNombre() + ", apellido=" + getApellido() + "telefono=" + telefono + '}';
+        return " => contactoEmergencia{" + "id=" + super.getId() + ", nombre=" + super.getNombre() + ", apellido=" + super.getApellido() + "telefono=" + telefono + '}';
     }
 
 }

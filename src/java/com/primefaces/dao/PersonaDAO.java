@@ -40,17 +40,15 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
     public int eliminar(Persona persona) {
         Connection conn = new Conexion().getConnection();
         int filas = 0;
-
         if (conn != null) {
             PreparedStatement stmt;
-
             try {
                 stmt = conn.prepareStatement(DELETE);
                 stmt.setLong(1, persona.getId());
                 return filas = stmt.executeUpdate();
 
             } catch (SQLException ex) {
-                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al insertar persona", ex);
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al eliminar persona", ex);
             } finally {
 
             }
@@ -77,7 +75,7 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
                 return filas = stmt.executeUpdate();
 
             } catch (SQLException ex) {
-                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al insertar persona", ex);
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al modificar persona", ex);
             } finally {
 
             }
@@ -130,12 +128,10 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
                     persona.setCorreo(resultSet.getString(5));
 
                     dato.add(persona);
-
                     return persona;
-
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al obtener persona por id", ex);
             } finally {
                 conexion.close(conn);
             }
@@ -172,7 +168,7 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
 
             } catch (SQLException ex) {
                 Logger.getLogger(PersonaDAO.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                        .getName()).log(Level.SEVERE, "Error al obtener lista de personas", ex);
             } finally {
                 conexion.close(conn);
             }

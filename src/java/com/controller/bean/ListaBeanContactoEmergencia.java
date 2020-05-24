@@ -18,12 +18,14 @@ import javax.faces.bean.ViewScoped;
 @SessionScoped
 @ManagedBean
 @ViewScoped
-public class ListaBeanContactoEmergencia extends Persona{
+public class ListaBeanContactoEmergencia extends Persona {
 
     private List<ContactoEmergencia> ContactosEmergencia;
+    private ContactoEmergencia contactoEmergencia;
     private ContactoEmergenciaDAO emergenciaDAO;
 
     public List<ContactoEmergencia> getContactosEmergencia() {
+        this.ContactosEmergencia = emergenciaDAO.obtenerTodos();
         return ContactosEmergencia;
     }
 
@@ -37,15 +39,15 @@ public class ListaBeanContactoEmergencia extends Persona{
 
     @PostConstruct
     public void init() {
-        ContactosEmergencia = cargarContactos();
+        contactoEmergencia = new ContactoEmergencia();
     }
+//
+//    private List<ContactoEmergencia> cargarContactos() {
+//        ContactoEmergenciaDAO personaDAO = new ContactoEmergenciaDAO();
+//        return personaDAO.obtenerTodos();
+//    }
 
-    private List<ContactoEmergencia> cargarContactos() {
-        ContactoEmergenciaDAO personaDAO = new ContactoEmergenciaDAO();
-        return personaDAO.obtenerTodos();
-    }
-
-    public String salir() {
+    public String regresar() {
         return "index";
     }
 

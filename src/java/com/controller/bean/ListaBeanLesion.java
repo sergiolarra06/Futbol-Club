@@ -17,32 +17,34 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class ListaBeanLesion {
 
-    private List<Lesion> Lesiones;
+    private Lesion lesion;
+    private List<Lesion> lesiones;
     private LesionDAO lesionDAO;
 
+    @PostConstruct
+    public void init() {
+        lesionDAO = new LesionDAO();
+        lesion = new Lesion();
+    }
+
     public List<Lesion> getLesion() {
-        return Lesiones;
+        this.lesiones = lesionDAO.obtenerTodos();
+        return lesiones;
     }
 
     public void setLesion(List<Lesion> Lesion) {
-        this.Lesiones = Lesion;
+        this.lesiones = Lesion;
     }
 
     public ListaBeanLesion() {
         lesionDAO = new LesionDAO();
     }
 
-    @PostConstruct
-    public void init() {
-        Lesiones = cargarLesiones();
-    }
-
-    private List<Lesion> cargarLesiones() {
-        LesionDAO personaDAO = new LesionDAO();
-        return personaDAO.obtenerTodos();
-    }
-
-    public String salir() {
+//    private List<Lesion> cargarLesiones() {
+//        LesionDAO personaDAO = new LesionDAO();
+//        return personaDAO.obtenerTodos();
+//    }
+    public String regresar() {
         return "index";
     }
 }

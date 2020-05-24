@@ -12,8 +12,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
-//import javax.validation.constraints.Email;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+//import javax.validation.constraints.Email;
 /**
  *
  * @author Jean Cortes
@@ -24,6 +26,8 @@ import org.primefaces.event.RowEditEvent;
 @ViewScoped
 public class BeanPersona implements Serializable {
 
+    private static final Logger LOG = LogManager.getLogger(BeanJugador.class);
+
     /**
      * Creates a new instance of BeanVehiculo
      */
@@ -32,7 +36,7 @@ public class BeanPersona implements Serializable {
     private String apellido;
     private Date fechaNacimiento;
 //    @Email(message = "must be a valid email")
-    private String correo = "example@gmail.com";
+    private String correo;
 
     public BeanPersona() {
 
@@ -52,13 +56,17 @@ public class BeanPersona implements Serializable {
 
         PersonaDAO personaDAO = new PersonaDAO();
         int rta = personaDAO.insertar(persona);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Se registro la persona"));
-
+        if (rta == 1) {
+            LOG.info("SEVERITY_INFO: Se registro la persona" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Se registro la persona"));
+        } else {
+            LOG.info("SEVERITY_INFO: No Se registro el persona" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atención", "Se registro la persona"));
+        }
         System.out.println("rta " + rta);
     }
 
     public void modificar() {
-
         Persona persona = new Persona();
         persona.setNombre(nombre);
         persona.setApellido(apellido);
@@ -71,31 +79,28 @@ public class BeanPersona implements Serializable {
 
         if (rta > 0) {
             //this.mensaje = "actualizo "+r;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Actualizo " + rta + " Vehiculo"));
+            LOG.info("SEVERITY_INFO: No Se registro el jugador" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Actualizo " + rta + " persona"));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "NO, Actualizo"));
-
+            LOG.error("SEVERITY_INFO: No Se registro el jugador" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "NO, Actualizo la persona"));
         }
         System.out.println("rta " + rta);
 
     }
 
     public void eliminar() {
-
         Persona persona = new Persona();
         persona.setId(id);
-//        persona.setNombre(nombre);
-//        persona.setApellido(apellido);
-//        persona.setFechaNacimiento(new java.sql.Date(fechaNacimiento.getTime()));
-//        persona.setCorreo(correo);
-
         PersonaDAO personaDAO = new PersonaDAO();
         int rta = personaDAO.eliminar(persona);
         if (rta > 0) {
+            LOG.info("SEVERITY_INFO: Se eliminado la persona " + rta);
             //this.mensaje = "eliminar "+r;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Eliminado " + rta + " Persona"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Eliminado " + rta + " persona"));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "No, Elimino"));
+            LOG.info("SEVERITY_INFO: No se eliminado el persona" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "No, Elimino la persona"));
 
         }
     }

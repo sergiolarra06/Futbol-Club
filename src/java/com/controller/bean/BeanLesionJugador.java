@@ -27,6 +27,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.Persistence;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 //import javax.validation.constraints.Email;
 
 /**
@@ -41,10 +43,11 @@ import javax.persistence.Persistence;
 
 public class BeanLesionJugador implements Serializable {
 
+    private static final Logger LOG = LogManager.getLogger(BeanLesion.class);
     /**
      * Creates a new instance of BeanVehiculo
      */
-    private java.sql.Date fecha;
+    private Date fecha;
     private Jugador jugador;
     private Lesion lesion;
 
@@ -55,27 +58,69 @@ public class BeanLesionJugador implements Serializable {
     }
 
     public void insertar() {
-        if (fecha == null) {
+        if (fecha == null || jugador == null || lesion == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Datos Nulos Revise"));
             return;
         }
         LesionJugador lesionJugador = new LesionJugador();
-        lesionJugador.setFecha(fecha);
+        lesionJugador.setFecha(new java.sql.Date(fecha.getTime()));
         lesionJugador.setJugador(jugador);
         lesionJugador.setLesion(lesion);
 
         LesionJugadorDAO lesionJugadorDAO = new LesionJugadorDAO();
         int rta = lesionJugadorDAO.insertar(lesionJugador);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Se registro el asocio entre lesion y jugador"));
-
         System.out.println("rta " + rta);
+        if (rta > 0) {
+            LOG.info("SEVERITY_INFO: Se Inserto la lesionJugador " + rta);
+            //this.mensaje = "eliminar "+r;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "inserto " + rta + " lesionJugador"));
+        } else {
+            LOG.info("SEVERITY_ERROR: No se inserto el lesionJugador" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "No, inserto la lesionJugador"));
+        }
     }
 
-    public java.sql.Date getFecha() {
+    public void modificar() {
+        LesionJugador lesionJugador = new LesionJugador();
+        lesionJugador.setLesion(lesion);
+
+        lesionJugador.setFecha(new java.sql.Date(fecha.getTime()));
+        lesionJugador.setJugador(jugador);
+        lesionJugador.setLesion(lesion);
+        LesionJugadorDAO lesionDAO = new LesionJugadorDAO();
+        int rta = lesionDAO.modificar(lesionJugador);
+        System.out.println("rta " + rta);
+        if (rta > 0) {
+            //this.mensaje = "actualizo "+r;
+            LOG.info("SEVERITY_INFO: Se actualizo el lesionJugador" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Actualizo " + rta + " lesionJugador"));
+        } else {
+            LOG.error("SEVERITY_ERROR: No se actualizo el lesionJugador" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "NO, Actualizo la lesionJugador"));
+        }
+    }
+
+    public void eliminar() {
+        LesionJugador lesionJugador = new LesionJugador();
+        lesionJugador.setLesion(lesion);
+        LesionJugadorDAO lesionDAO = new LesionJugadorDAO();
+        int rta = lesionDAO.eliminar(lesionJugador);
+        System.out.println("rta " + rta);
+        if (rta > 0) {
+            //this.mensaje = "eliminar "+r;
+            LOG.info("SEVERITY_INFO: Se elimino el lesionJugador" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "elimino " + rta + " lesionJugador"));
+        } else {
+            LOG.error("SEVERITY_ERROR:No se elimino el lesionJugador" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "NO, elimino la lesionJugador"));
+        }
+    }
+
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(java.sql.Date fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -95,7 +140,7 @@ public class BeanLesionJugador implements Serializable {
         this.lesion = lesion;
     }
 
-    public String salir() {
+    public String regresar() {
         return "index";
     }
 

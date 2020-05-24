@@ -76,7 +76,7 @@ public class BeanEstatura implements Serializable {
         this.estatura = estatura;
     }
 
-    public String salir() {
+    public String regresar() {
         return "index";
     }
 

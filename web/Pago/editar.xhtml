@@ -32,9 +32,9 @@
             </p:selectOneMenu>
 
             <br/>
-            <p:commandButton value="Guardar" action="#{beanJugador.actualizar()}" update="messages,growl"/>   
+            <p:commandButton value="Guardar" action="#{beanJugador.modificar()}" update="messages,growl"/>   
             <br />
-            <p:commandButton value="Salir" action="#{beanJugador.salir()}" id="iconOnly" 
+            <p:commandButton value="Salir" action="#{beanJugador.regresar()}" id="iconOnly" 
                              style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
         </h:form>
     </ui:define>

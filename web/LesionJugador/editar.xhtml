@@ -8,30 +8,15 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <h1 align="center"  style="color: menutext">REGISTAR LESION_JUGADOR</h1>
-
-        <h:form>    
+        <h1 align="center"  style="color: menutext">EDITAR LESION_JUGADOR</h1>
+        <h:form >    
             <p:growl id="growl" showDetail="true" sticky="true"/>
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate/>
             </p:messages>
 
-            <h4> <p:outputLabel for="button" value="Fecha de lesion" /> </h4>
-            <p:calendar id="button" value="#{beanLesionJugador.fecha}" showOn="button" />
-
-
-            <h3>  <p:outputLabel for="@next" value=" Nombre Jugador" /> </h3> 
-            <p:selectOneMenu id="jugador" value="#{beanLesionJugador.jugador.id}" style="width:125px">
-                <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItems value="#{listaBeanJugadores.jugadores}" var="j" itemValue="#{j.id}" itemLabel="#{j.nombre}" />
-                <f:facet name="footer">
-                    <p:separator />
-                    <h:outputText  style="font-weight:bold;"/>
-                </f:facet>
-            </p:selectOneMenu>
-
-            <h3> <p:outputLabel for="@next" value="Nombre lesion" /> </h3> 
-            <p:selectOneMenu id="lesion" value="#{beanLesionJugador.lesion.id}" style="width:125px">
+            <h3>  <p:outputLabel for="@next" value="Nombre lesion" /> </h3> 
+            <p:selectOneMenu id="lesion1" value="#{beanLesionJugador.lesion.id}" style="width:125px">
                 <f:selectItem itemLabel="Select One" itemValue="" />
                 <f:selectItems value="#{listaBeanLesion.lesion}" var="l" itemValue="#{l.id}" itemLabel="#{l.descripcion}" />
                 <f:facet name="footer">
@@ -40,11 +25,38 @@
                 </f:facet>
             </p:selectOneMenu>
 
+            <h4> <p:outputLabel for="button" value="Fecha de lesion" /> </h4>
+            <p:calendar id="button" value="#{beanLesionJugador.fecha}" showOn="button" />
+
+            <h3><p:outputLabel for="@next" value=" Nombre Jugador" /> </h3> 
+            <p:selectOneMenu id="jugador" value="#{beanLesionJugador.jugador.id}" style="width:125px">
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{listaBeanJugadores.jugadores}" var="j" itemValue="#{j.id}" itemLabel="#{j.nombre}" />
+                <f:facet name="footer">
+                    <p:separator />
+                    <h:outputText value="3 consoles" style="font-weight:bold;"/>
+                </f:facet>
+            </p:selectOneMenu>
+
+            <h3>  <p:outputLabel for="@next" value="Nombre lesion" /> </h3> 
+            <p:selectOneMenu id="lesion2" value="#{beanLesionJugador.lesion.id}" style="width:125px">
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{listaBeanLesion.lesion}" var="l" itemValue="#{l.id}" itemLabel="#{l.descripcion}" />
+                <f:facet name="footer">
+                    <p:separator />
+                    <h:outputText style="font-weight:bold;"/>
+                </f:facet>
+            </p:selectOneMenu>
+
+
+
+
+
             <br/><br/>
-            <p:commandButton value="Guardar" icon="fa fa-fw fa-save"  action="#{beanLesionJugador.insertar()}" update="messages,growl"/>   
-            <br/>
+            <p:commandButton  value="Guardar" icon="fa fa-fw fa-save" action="#{beanLesionJugador.modificar()}" update="messages,growl"/>   
+            <br />
             <p:commandButton value="Regresar a la lista"  icon="fa fa-fw fa-arrow-circle-o-left"  action="#{beanLesionJugador.regresar()}" id="iconOnly" 
-                             style="margin-right:px;" title="Ir ->" />
+                             style="margin-right:px;"/>
 
         </h:form>
     </ui:define>

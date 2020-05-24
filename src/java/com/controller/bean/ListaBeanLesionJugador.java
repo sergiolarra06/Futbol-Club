@@ -24,9 +24,11 @@ import org.primefaces.event.RowEditEvent;
 public class ListaBeanLesionJugador {
 
     private List<LesionJugador> LesionJugadores;
+    private LesionJugador lesionJugador;
     private LesionJugadorDAO lesionJugadorDAO;
 
     public List<LesionJugador> getLesionJugadores() {
+        LesionJugadores = lesionJugadorDAO.obtenerTodos();
         return LesionJugadores;
     }
 
@@ -34,22 +36,31 @@ public class ListaBeanLesionJugador {
         this.LesionJugadores = LesionJugadores;
     }
 
-   
     public ListaBeanLesionJugador() {
-        lesionJugadorDAO = new LesionJugadorDAO();
+
     }
 
     @PostConstruct
     public void init() {
-        LesionJugadores = cargarLesionesJugadores();
+        lesionJugador = new LesionJugador();
+        lesionJugadorDAO = new LesionJugadorDAO();
     }
 
-    private List<LesionJugador> cargarLesionesJugadores() {
-        LesionJugadorDAO lesionJugadorDAO = new LesionJugadorDAO();
-        return lesionJugadorDAO.obtenerTodos();
-    }
-
+//    private List<LesionJugador> cargarLesionesJugadores() {
+//        LesionJugadorDAO lesionJugadorDAO = new LesionJugadorDAO();
+//        return lesionJugadorDAO.obtenerTodos();
+//    }
     public String salir() {
         return "index";
     }
+
+    public LesionJugador getLesionJugador() {
+        return lesionJugador;
+    }
+
+    public void setLesionJugador(LesionJugador lesionJugador) {
+        this.lesionJugador = lesionJugador;
+    }
+    
+    
 }

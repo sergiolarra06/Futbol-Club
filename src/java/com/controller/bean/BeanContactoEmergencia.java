@@ -13,6 +13,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 //import javax.validation.constraints.Email;
 
 /**
@@ -24,6 +26,8 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class BeanContactoEmergencia implements Serializable {
+
+    private static final Logger LOG = LogManager.getLogger(BeanJugador.class);
 
     /**
      * Creates a new instance of BeanVehiculo
@@ -40,15 +44,56 @@ public class BeanContactoEmergencia implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Datos Nulos Revise"));
             return;
         }
-        ContactoEmergencia persona = new ContactoEmergencia();
-        persona.setId(id);
-        persona.setTelefono(telefono);
+        ContactoEmergencia contactoEmergencia = new ContactoEmergencia();
+        contactoEmergencia.setId(id);
+        contactoEmergencia.setTelefono(telefono);
 
-        ContactoEmergenciaDAO personaDAO = new ContactoEmergenciaDAO();
-        int rta = personaDAO.insertar(persona);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Se registro la el contacto de emergencia"));
-
+        ContactoEmergenciaDAO contactoEmergenciaDAO = new ContactoEmergenciaDAO();
+        int rta = contactoEmergenciaDAO.insertar(contactoEmergencia);
+        if (rta == 1) {
+            LOG.info("SEVERITY_INFO: Se registro el contactoEmergencia" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Se registro el contactoEmergencia"));
+        } else {
+            LOG.info("SEVERITY_INFO: No Se registro el contactoEmergencia" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "No Se registro el contactoEmergencia"));
+        }
         System.out.println("rta " + rta);
+    }
+
+    public void modificar() {
+        ContactoEmergencia contactoEmergencia = new ContactoEmergencia();
+        contactoEmergencia.setTelefono(telefono);
+        contactoEmergencia.setId(id);
+        ContactoEmergenciaDAO contactoEmergenciaDAO = new ContactoEmergenciaDAO();
+        int rta = contactoEmergenciaDAO.modificar(contactoEmergencia);
+
+        if (rta > 0) {
+            //this.mensaje = "actualizo "+r;
+            LOG.info("SEVERITY_INFO: Se actualizo el contactoEmergencia" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Actualizo " + rta + " Persona"));
+        } else {
+            LOG.error("SEVERITY_ERROR:No se modifico el contactoEmergencia" + rta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "NO, Actualizo"));
+        }
+        System.out.println("rta " + rta);
+
+    }
+
+    public void eliminar() {
+        ContactoEmergencia contactoEmergencia = new ContactoEmergencia();
+        contactoEmergencia.setTelefono(telefono);
+        contactoEmergencia.setId(id);
+
+        ContactoEmergenciaDAO contactoEmergenciaDAO = new ContactoEmergenciaDAO();
+        int rta = contactoEmergenciaDAO.eliminar(contactoEmergencia);
+        System.out.println("rta " + rta);
+        if (rta > 0) {
+            //this.mensaje = "eliminar "+r;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Eliminado " + rta + " Vehiculo"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "NO, Elimino"));
+
+        }
     }
 
     public long getId() {
@@ -67,7 +112,7 @@ public class BeanContactoEmergencia implements Serializable {
         this.telefono = telefono;
     }
 
-    public String salir() {
+    public String regresar() {
         return "index";
     }
 

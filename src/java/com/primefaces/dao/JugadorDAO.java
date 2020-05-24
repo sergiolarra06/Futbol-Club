@@ -50,12 +50,8 @@ public class JugadorDAO implements IOperaciones<Jugador, Long> {
             try {
                 stmt = conn.prepareStatement(INSERT);
                 stmt.setLong(1, jugador.getId());
-                stmt.setString(2, jugador.getNombre());
-                stmt.setString(3, jugador.getApellido());
-                stmt.setDate(4, (java.sql.Date) jugador.getFechaNacimiento());
-                stmt.setString(5, jugador.getCorreo());
-                stmt.setLong(6, jugador.getContactoEmergencia().getId());
-                stmt.setString(7, jugador.getPosicion().toString());
+                stmt.setLong(2, jugador.getContactoEmergencia().getId());
+                stmt.setString(3, jugador.getPosicion().toString());
                 return stmt.executeUpdate();
             } catch (SQLException ex) {
                 Logger.getLogger(JugadorDAO.class.getName()).log(Level.SEVERE, "Error al insertar jugador", ex);
@@ -63,7 +59,6 @@ public class JugadorDAO implements IOperaciones<Jugador, Long> {
             }
         }
         return 0;
-
     }
 
     @Override
@@ -91,20 +86,21 @@ public class JugadorDAO implements IOperaciones<Jugador, Long> {
     @Override
     public int eliminar(Jugador jugador) {
         Connection conn = new Conexion().getConnection();
+        int filas = 0;
         if (conn != null) {
             PreparedStatement stmt;
             try {
                 stmt = conn.prepareStatement(DELETE);
                 stmt.setLong(1, jugador.getId());
-                stmt.setLong(2, jugador.getContactoEmergencia().getId());
-                stmt.setString(3, jugador.getPosicion().toString());
-                return stmt.executeUpdate();
+                return filas = stmt.executeUpdate();
+
             } catch (SQLException ex) {
-                Logger.getLogger(JugadorDAO.class.getName()).log(Level.SEVERE, "Error al eliminar jugador", ex);
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al eliminar persona", ex);
             } finally {
+
             }
         }
-        return 0;
+        return filas;
     }
 
     @Override

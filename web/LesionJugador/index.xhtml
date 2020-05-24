@@ -8,37 +8,36 @@
 
     <ui:define name="content">
         <h1 align="center"  style="color: menutext">LISTA DE LESIONES JUGADORES</h1>
-        <section id="actions" class="py-4 mb-4 bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a href="#" class="btn btn-primary btn-block"
-                           data-toggle="modal" data-target="#agregarClienteModal">
-                            <i class="fas fa-plus"></i> Agregar
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <h:form id="nuevo" class="col-md-4" >
+            <p:fieldset legend="Operaciones" toggleable="true"  >
+                <p:panelGrid columns="1"   >
+                    <h:commandLink class="fa fa-plus" action="/LesionJugador/crear" value="Nuevo" type="button" />
+                    <h:commandLink class="fa fa-fw fa-edit" action="/LesionJugador/editar" value="Editar" type="button" />
+                    <h:commandLink class="fa fa-fw fa-remove" action="/LesionJugador/borrar" value="Borrar" type="button" />
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
 
+ <p:fieldset legend="Datos" toggleable="true">
         <p:dataTable var="lesionesJugadores" value="#{listaBeanLesionJugador.lesionJugadores}">
 
             <p:column headerText="Fecha">
                 <h:outputText value="#{lesionesJugadores.fecha}" />
             </p:column>
 
-
             <p:column headerText="Jugador ID">
                 <h:outputText value="#{lesionesJugadores.jugador.id}" />
             </p:column>
+            
+            
+
             <p:column headerText="Lesion ID">
-                <h:outputText value="#{lesionesJugadores.lesion.id}" />
+                <h:outputText value="#{lesionesJugadores.lesion.descripcion}" />
             </p:column>
 
 
         </p:dataTable>
-        <p:commandButton value="Salir" action="#{lesionesJugadores.salir()}" id="btnSalir" 
-                         style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
+   </p:fieldset>
 
     </ui:define>
 

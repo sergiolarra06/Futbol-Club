@@ -30,6 +30,7 @@ public class LesionJugador {
     }
 
     public Jugador getJugador() {
+
         return jugador;
     }
 
@@ -47,7 +48,7 @@ public class LesionJugador {
 
     @Override
     public String toString() {
-        return "LesionJugador{" + "fecha=" + fecha + ", jugador=" + jugador.getId() + ", lesion=" + lesion.getId() + '}';
+        return "LesionJugador{" + "fecha=" + fecha + ", jugador=" + jugador.getNombre() + ", lesion=" + lesion.getId() + '}';
     }
 
 }

@@ -6,21 +6,42 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.*;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.*;
 
 /**
  *
- * @author OscarEsteban
+ * @author
  */
+@Named
+@RequestScoped
 @ManagedBean
 @ViewScoped
 public class ListaBeanPersonas {
 
+//    @EJB
     private List<Persona> Personas;
     private PersonaDAO personaDAO;
+    private Persona persona;
+//
+//    private BeanPersona beanPersona;
+
+    public ListaBeanPersonas() {
+        personaDAO = new PersonaDAO();
+//        beanPersona = new BeanPersona();
+    }
+
+    @PostConstruct
+    public void init() {
+        persona = new Persona();
+    }
 
     public List<Persona> getPersonas() {
+        this.Personas = personaDAO.obtenerTodos();
         return Personas;
     }
 
@@ -28,29 +49,12 @@ public class ListaBeanPersonas {
         this.Personas = Personas;
     }
 
-    public ListaBeanPersonas() {
-        personaDAO = new PersonaDAO();
+    public Persona getPersona() {
+        return persona;
     }
 
-    @PostConstruct
-    public void init() {
-        Personas = cargarPersonas();
-    }
-
-    private List<Persona> cargarPersonas() {
-        PersonaDAO personaDAO = new PersonaDAO();
-        return personaDAO.obtenerTodos();
-    }
-
-    private Persona cargarPersona(Long id) {
-        PersonaDAO personaDAO = new PersonaDAO();
-        return personaDAO.obtener(id);
-    }
-
-    
-    //Pantalla dialog averiguar 
-    public void editar(Persona dato) {
-        return ;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     public String salir() {

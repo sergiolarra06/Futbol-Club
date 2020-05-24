@@ -20,26 +20,26 @@ import java.util.logging.Logger;
  */
 public class LesionJugadorDAO implements IOperaciones<LesionJugador, Long> {
 
-    private static final String SQL_SELECT_INNER_JOIN = "SELECT persona.id, persona.nombre, persona.apellido, persona.fecha_nacimiento, persona.correo,\n"
-            + "	 jugador.posicion, jugador.contacto_emergencia_id\n"
-            + "	   FROM persona INNER JOIN jugador ON persona.id = jugador.id";
+    private static final String SQL_SELECT_INNER_JOIN = "SELECT persona.nombre,\n"
+            + "	 fecha, jugador_id, lesion_id\n"
+            + "	   FROM persona INNER JOIN lesion_jugador ON persona.id = lesion_jugador.jugador_id";
 
     private static final String SQL_SELECT = "SELECT fecha, jugador_id, lesion_id\n"
             + "	FROM public.lesion_jugador";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT id, contacto_emergencia_id, posicion\n"
-            + "	FROM public.jugador WHERE id = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT fecha, jugador_id, lesion_id\n"
+            + "	FROM public.lesion_jugador WHERE lesion_id=?";
 
     private static final String INSERT = "INSERT INTO public.lesion_jugador(\n"
             + "	fecha, jugador_id, lesion_id)\n"
             + "	VALUES (?, ?, ?)";
 
-    private static final String UPDATE = "UPDATE public.jugador\n"
-            + "	SET  posicion=?\n"
-            + "	WHERE id = ?";
+    private static final String UPDATE = "UPDATE public.lesion_jugador\n"
+            + "	SET fecha=?, jugador_id=?, lesion_id=?\n"
+            + "	WHERE lesion_id=?";
 
-    private static final String DELETE = "DELETE FROM public.jugador\n"
-            + "	WHERE id = ?";
+    private static final String DELETE = "DELETE FROM public.lesion_jugador\n"
+            + "	WHERE lesion_id=?";
 
     @Override
     public int insertar(LesionJugador lesionJugador) {
@@ -53,7 +53,7 @@ public class LesionJugadorDAO implements IOperaciones<LesionJugador, Long> {
                 stmt.setLong(3, lesionJugador.getLesion().getId());
                 return stmt.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(LesionJugadorDAO.class.getName()).log(Level.SEVERE, "Error al insertar jugador", ex);
+                Logger.getLogger(LesionJugadorDAO.class.getName()).log(Level.SEVERE, "Error al insertar lesionJugador", ex);
             } finally {
             }
         }
@@ -65,23 +65,22 @@ public class LesionJugadorDAO implements IOperaciones<LesionJugador, Long> {
     public int modificar(LesionJugador lesionJugador) {
         Connection conn = new Conexion().getConnection();
         int filas = 0;
-
         if (conn != null) {
             PreparedStatement stmt;
             try {
                 stmt = conn.prepareStatement(UPDATE);
+                stmt.setLong(1, lesionJugador.getLesion().getId());
                 stmt.setDate(2, lesionJugador.getFecha());
                 stmt.setLong(3, lesionJugador.getJugador().getId());
-                stmt.setLong(1, lesionJugador.getLesion().getId());
+                stmt.setLong(4, lesionJugador.getLesion().getId());
                 return filas = stmt.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al insertar persona", ex);
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al insertar lesionJugador", ex);
             } finally {
 
             }
         }
         return filas;
-
     }
 
     @Override
@@ -91,12 +90,12 @@ public class LesionJugadorDAO implements IOperaciones<LesionJugador, Long> {
             PreparedStatement stmt;
             try {
                 stmt = conn.prepareStatement(DELETE);
-                stmt.setDate(1, (java.sql.Date) lesionJugador.getFecha());
-                stmt.setLong(2, lesionJugador.getJugador().getId());
-                stmt.setLong(3, lesionJugador.getLesion().getId());
+//                stmt.setDate(1, (java.sql.Date) lesionJugador.getFecha());
+//                stmt.setLong(2, lesionJugador.getJugador().getId());
+                stmt.setLong(1, lesionJugador.getLesion().getId());
                 return stmt.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(LesionJugadorDAO.class.getName()).log(Level.SEVERE, "Error al eliminar jugador", ex);
+                Logger.getLogger(LesionJugadorDAO.class.getName()).log(Level.SEVERE, "Error al eliminar lesionJugador", ex);
             } finally {
             }
         }
@@ -128,7 +127,7 @@ public class LesionJugadorDAO implements IOperaciones<LesionJugador, Long> {
 
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ContactoEmergenciaDAO.class.getName()).log(Level.SEVERE, "Error al obtener por id", ex);
             } finally {
                 conexion.close(conn);
             }
@@ -161,7 +160,7 @@ public class LesionJugadorDAO implements IOperaciones<LesionJugador, Long> {
                     lesionJugadores.add(lesionJugador);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(LesionJugadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LesionJugadorDAO.class.getName()).log(Level.SEVERE, "Error al obtener todos", ex);
             } finally {
                 conexion.close(conn);
             }

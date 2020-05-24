@@ -17,7 +17,6 @@ public class Jugador extends Persona {
     public Jugador() {
     }
 
-    
     public Jugador(long id, ContactoEmergencia contactoEmergencia, /*Posicion */ String posicion) {
         super(id);
         this.contactoEmergencia = contactoEmergencia;
@@ -52,11 +51,9 @@ public class Jugador extends Persona {
         this.contactoEmergencia = contactoEmergencia;
     }
 
-   
-
     @Override
     public String toString() {
-        return "Jugador{" + "id=" + super.getId() + ", nombre=" + getNombre() + ", apellido=" + getApellido() + ", fecha nacimiento=" + getFechaNacimiento() + ", correo=" + getCorreo() + ", contactoEmergencia=" + contactoEmergencia + ", posicion=" + posicion.toString() + '}';
+        return "Jugador{" + "id=" + super.getId() + ", nombre=" + super.getNombre() + ", apellido=" + super.getApellido() + ", fecha nacimiento=" + super.getFechaNacimiento() + ", correo=" + super.getCorreo() + ", contactoEmergencia=" + contactoEmergencia.getNombre() + ", posicion=" + posicion + '}';
     }
 //    @Override
 //    public String toString() {

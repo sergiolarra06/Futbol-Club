@@ -8,6 +8,7 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
+        <h1 align="center"  style="color: menutext">REGISTAR PERSONA</h1>
         <h:form>    
             <p:growl id="growl" showDetail="true" sticky="true"/>
             <p:messages id="messages" showDetail="true" closable="true">
@@ -31,15 +32,11 @@
             <h3>Correo</h3>
             <p:inputText value="#{beanPersona.correo}"/>
             <br/>
-            <br/>
 
-            <p:commandButton value="Crear" icon="fas fa-save" action="#{beanPersona.insertar()}" type="button" update="messages,growl"/>   
+            <p:commandButton value="Guardar" icon="fa fa-fw fa-save"  action="#{beanPersona.insertar()}" update="messages,growl"/>   
             <br/>
             <p:commandButton value="Regresar a la lista"  icon="fa fa-fw fa-arrow-circle-o-left"  action="#{beanPersona.regresar()}" id="iconOnly" 
                              style="margin-right:px;" title="Ir ->" />
-
-
-
 
 
         </h:form>

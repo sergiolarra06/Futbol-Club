@@ -29,7 +29,8 @@ public class LesionDAO implements IOperaciones<Lesion, Long> {
             + "	SET descripcion=?\n"
             + "	WHERE id = ?";
 
-    private static final String DELETE = "";
+    private static final String DELETE = "DELETE FROM public.lesion\n"
+            + "	WHERE id = ?";
 
     @Override
     public int insertar(Lesion lesion) {
@@ -61,7 +62,7 @@ public class LesionDAO implements IOperaciones<Lesion, Long> {
                 stmt.setLong(2, lesion.getId());
                 return stmt.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(LesionDAO.class.getName()).log(Level.SEVERE, "Error al insertar contacto de emergencia", ex);
+                Logger.getLogger(LesionDAO.class.getName()).log(Level.SEVERE, "Error al modificar lesión", ex);
             } finally {
 
             }
@@ -71,7 +72,22 @@ public class LesionDAO implements IOperaciones<Lesion, Long> {
 
     @Override
     public int eliminar(Lesion lesion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = new Conexion().getConnection();
+        int filas = 0;
+        if (conn != null) {
+            PreparedStatement stmt;
+            try {
+                stmt = conn.prepareStatement(DELETE);
+                stmt.setLong(1, lesion.getId());
+                return filas = stmt.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, "Error al eliminar lesion", ex);
+            } finally {
+
+            }
+        }
+        return filas;
     }
 
     @Override
@@ -96,7 +112,7 @@ public class LesionDAO implements IOperaciones<Lesion, Long> {
 
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(LesionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LesionDAO.class.getName()).log(Level.SEVERE, "Error al obtener por id", ex);
             } finally {
                 conexion.close(conn);
             }
@@ -128,7 +144,7 @@ public class LesionDAO implements IOperaciones<Lesion, Long> {
 
             } catch (SQLException ex) {
                 Logger.getLogger(LesionDAO.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                        .getName()).log(Level.SEVERE, "Error al listar todos las lesiones", ex);
             } finally {
                 conexion.close(conn);
             }

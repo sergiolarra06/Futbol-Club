@@ -23,8 +23,15 @@ public class ListaBeanJugadores extends Persona {
 
     private List<Jugador> Jugadores;
     private JugadorDAO jugadorDAO;
+    private Jugador jugador;
+
+    @PostConstruct
+    public void init() {
+        jugador = new Jugador();
+    }
 
     public List<Jugador> getJugadores() {
+        this.Jugadores = jugadorDAO.obtenerTodos();
         return Jugadores;
     }
 
@@ -36,16 +43,10 @@ public class ListaBeanJugadores extends Persona {
         jugadorDAO = new JugadorDAO();
     }
 
-    @PostConstruct
-    public void init() {
-        Jugadores = cargarJugadores();
-    }
-
-    private List<Jugador> cargarJugadores() {
-        JugadorDAO jugadorDAO = new JugadorDAO();
-        return jugadorDAO.obtenerTodos();
-    }
-
+//    private List<Jugador> cargarJugadores() {
+//        JugadorDAO jugadorDAO = new JugadorDAO();
+//        return jugadorDAO.obtenerTodos();
+//    }
     public String salir() {
         return "index";
     }

@@ -43,12 +43,10 @@ public class IndexBean implements Serializable {
     }
 
     public String irCrearPersona() {
-//      System.out.println("Ingreso a Persona..");
         return "crear";
     }
 
-    public String irListaPersona() {
-//        System.out.println("Ingreso a Lista Persona ..");
+    public String irEditarPersona() {
         return "index";
     }
 

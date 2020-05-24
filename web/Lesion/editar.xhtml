@@ -8,34 +8,32 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <h1 align="center"  style="color: menutext">EDITAR JUGADORES</h1>
+        <h1 align="center"  style="color: menutext">EDITAR LESIONES</h1>
         <h:form >    
             <p:growl id="growl" showDetail="true" sticky="true"/>
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate/>
             </p:messages>
 
-            <h3><p:outputLabel for="@next" value=" Nombre Jugador" /> </h3> 
-            <p:selectOneMenu id="jugador" value="#{beanJugador.id}" style="width:125px">
+            <h3>  <p:outputLabel for="@next" value="Nombre lesion" /> </h3> 
+            <p:selectOneMenu id="lesion" value="#{beanLesion.id}" style="width:125px">
                 <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItems value="#{listaBeanJugadores.jugadores}" var="j" itemValue="#{j.id}" itemLabel="#{j.nombre}" />
+                <f:selectItems value="#{listaBeanLesion.lesion}" var="l" itemValue="#{l.id}" itemLabel="#{l.descripcion}" />
                 <f:facet name="footer">
                     <p:separator />
-                    <h:outputText value="3 consoles" style="font-weight:bold;"/>
+                    <h:outputText style="font-weight:bold;"/>
                 </f:facet>
             </p:selectOneMenu>
 
 
-            <br/>
-            <h3>  <p:outputLabel for="@next" value="Posiciones:" /></h3>
-            <p:selectOneMenu id="posiciones" value="#{beanJugador.posicion}" effect="fold" editable="true">
-                <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItems value="#{beanJugador.posiciones}"  />
-            </p:selectOneMenu>
+
+            <h3>Nombre</h3>
+            <p:inputText value="#{beanLesion.descripcion}"/>
 
 
-            <br/>
-            <p:commandButton  value="Guardar" icon="fa fa-fw fa-save" action="#{beanJugador.modificar()}" update="messages,growl"/>   
+
+            <br/><br/>
+            <p:commandButton  value="Guardar" icon="fa fa-fw fa-save" action="#{beanLesion.modificar()}" update="messages,growl"/>   
             <br />
             <p:commandButton value="Regresar a la lista"  icon="fa fa-fw fa-arrow-circle-o-left"  action="#{beanJugador.regresar()}" id="iconOnly" 
                              style="margin-right:px;"/>

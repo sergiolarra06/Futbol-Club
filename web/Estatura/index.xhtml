@@ -8,6 +8,25 @@
 
     <ui:define name="content">
         <h1 align="center"  style="color: menutext">LISTA DE ESTATURAS</h1>
+
+        <h:form id="nuevo" class="col-md-4" >
+            <p:fieldset legend="Operaciones" toggleable="true"  >
+                <p:panelGrid columns="1"   >
+                    <h:commandLink class="fa fa-plus" action="/Estatura/crear" value="Nuevo" type="button" />
+                    <h:commandLink class="fa fa-fw fa-edit" action="/Estatura/editar" value="Editar" type="button" />
+                    <h:commandLink class="fa fa-fw fa-remove" action="/Estatura/borrar" value="Borrar" type="button" />
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
+   
+    
+    <p:fieldset legend="Datos" toggleable="true">
+
+        <p:growl id="growl" showDetail="true" sticky="true"/>
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
         <p:dataTable var="estatura" value="#{listaBeanEstatura.estatura}">
 
             <p:column headerText="Jugador ID">
@@ -24,12 +43,11 @@
                 <h:outputText value="#{estatura.estatura}" />
             </p:column>
 
-         
+
 
         </p:dataTable>
-        <p:commandButton value="Salir" action="#{listaBeanPersonas.salir()}" id="btnSalir" 
-                         style="margin-right:20px;" icon="pi pi-save" title="Ir ->" />
+           </p:fieldset>
 
-    </ui:define>
+        </ui:define>
 
 </ui:composition>
