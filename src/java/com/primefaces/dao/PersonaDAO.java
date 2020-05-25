@@ -117,15 +117,15 @@ public class PersonaDAO implements IOperaciones<Persona, Long> {
             try {
                 stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
                 stmt.setLong(1, id);
-                ResultSet resultSet = stmt.executeQuery();
-                if (resultSet.next()) {
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
 
                     Persona persona = new Persona();
-                    persona.setId(resultSet.getInt(1));
-                    persona.setNombre(resultSet.getString(2));
-                    persona.setApellido(resultSet.getString(3));
-                    persona.setFechaNacimiento(resultSet.getDate(4));
-                    persona.setCorreo(resultSet.getString(5));
+                    persona.setId(rs.getInt(1));
+                    persona.setNombre(rs.getString(2));
+                    persona.setApellido(rs.getString(3));
+                    persona.setFechaNacimiento(rs.getDate(4));
+                    persona.setCorreo(rs.getString(5));
 
                     dato.add(persona);
                     return persona;
