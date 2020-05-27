@@ -19,7 +19,7 @@ import javax.faces.bean.ViewScoped;
 public class ListaBeanEstatura {
 
     private List<Estatura> Estatura;
-    private EstaturaDAO emergenciaDAO;
+    private EstaturaDAO estaturaDAO;
 
     public List<Estatura> getEstatura() {
         return Estatura;
@@ -30,7 +30,7 @@ public class ListaBeanEstatura {
     }
 
     public ListaBeanEstatura() {
-        emergenciaDAO = new EstaturaDAO();
+        estaturaDAO = new EstaturaDAO();
     }
 
     @PostConstruct

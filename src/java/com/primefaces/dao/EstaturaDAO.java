@@ -24,7 +24,7 @@ public class EstaturaDAO implements IOperaciones<Estatura, Long> {
             + "	FROM public.estatura";
 
     private static final String SQL_SELECT_BY_ID = "SELECT  id, telefono\n"
-            + "	FROM public.contacto_emergencia WHERE id = ?";
+            + "	FROM public.estatura WHERE id = ?";
 
     private static final String INSERT = "INSERT INTO public.estatura(\n" +
 "	jugador_id, fecha, estatura)\n" +

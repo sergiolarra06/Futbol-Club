@@ -50,6 +50,7 @@ public class BeanJugador implements Serializable {
 
     private /*Posicion */ String posicion;
     private Map<String, String> posiciones = new HashMap<String, String>();
+    private String contrasena;
 
     public BeanJugador() {
         contactosEmergencia = new ContactoEmergencia();

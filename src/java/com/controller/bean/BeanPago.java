@@ -18,7 +18,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.event.RowEditEvent;
+//import org.primefaces.event.RowEditEvent;
 //import javax.validation.constraints.Email;
 
 /**

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition    xmlns="http://www.w3.org/1999/xhtml"
+                   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                   template="../plantillas/plantilla.xhtml"
+                   xmlns:p="http://primefaces.org/ui"
+                   xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <h1 align="center"  style="color: menutext">LISTA DE GOLES</h1>
+
+        <h:form id="nuevo" class="col-md-4" >
+            <p:fieldset legend="Operaciones" toggleable="true"  >
+                <p:panelGrid columns="1"   >
+                    <h:commandLink class="fa fa-plus" action="/Gol/crear" value="Nuevo" type="button" />
+                    <h:commandLink class="fa fa-fw fa-edit" action="/Gol/editar" value="Editar" type="button" />
+                    <h:commandLink class="fa fa-fw fa-remove" action="/Gol/borrar" value="Borrar" type="button" />
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
+   
+    
+    <p:fieldset legend="Datos" toggleable="true">
+
+        <p:growl id="growl" showDetail="true" sticky="true"/>
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
+        <p:dataTable var="gol" value="#{listaBeanGol.gol}">
+
+            <p:column headerText="Jugador ID">
+                <h:outputText value="#{gol.jugador.nombre}" />
+            </p:column>
+
+            <!--
+            -->
+            <p:column headerText="Fecha">
+                <h:outputText value="#{gol.fecha}" />
+            </p:column>
+
+            <p:column headerText="Goles">
+                <h:outputText value="#{gol.gol}" />
+            </p:column>
+
+
+
+        </p:dataTable>
+           </p:fieldset>
+
+        </ui:define>
+
+</ui:composition>
